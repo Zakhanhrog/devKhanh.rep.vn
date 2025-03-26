@@ -1,0 +1,163 @@
+body{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: #a59f9f;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    
+    
+  }
+  .Mobile{
+    width: 660px;
+    height: 600px;
+    margin: 30px 50px;
+    padding: 40px;
+    position: relative;
+    align-items: center;
+    border-radius: 20px;
+
+  }
+  .Nokia{
+    width: 300px;
+    height: 600px;
+    background-color: #f2f2f2;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding: 10px;
+    
+
+  }
+  .Iphone{
+    width: 300px;
+    height: 600px;
+    background-color: #f2f2f2;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;       
+    align-items: center;
+    position: relative;
+    left: 350px;
+    padding: 10px;
+    top: -620px;
+    
+  }
+  .screen{
+    width: 290px;
+    height: 600px;
+    background-color: #8e8585;
+    border-radius: 10px;
+    display: flex;
+    color: #fff;
+    font-size: 20px;
+    padding: 5px;
+
+  }
+  .header{
+    width: 290px;
+    height: 25px;
+    color: #fff;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+  }
+  .mainScreen{
+    width: 290px;
+    height: 520px;
+    background-color: #fff;
+    display: flex;
+    color: #000;
+    font-size: 15px;
+    position: absolute;
+    margin-top: 25px;
+    
+  }
+    .footer{
+        width: 290px;
+        height: 35px;
+        color: #fff;
+        font-size: 20px;
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        border-radius: 10px;
+        margin-top: 550px;
+    }
+    .footer_iphone{
+        width: 290px;
+        height: 35px;
+        color: #fff;
+        font-size: 20px;
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        border-radius: 10px;
+        margin-top: 525px;
+    }
+    .mainScreen_top{
+        width: 290px;
+        height: 450px;
+        background-color: #f15b5b2d;
+        display: flex;
+        color: #000;
+        font-size: 15px;
+        position: absolute;
+    }
+    .mainScreen_bottom{
+        width: 290px;
+        height: 70px;
+        background-color: #fff;
+        display: flex;
+        color: #000;
+        font-size: 15px;
+        position: absolute;
+        margin-top: 450px;
+    }
+    input{
+        width: 250px;
+        height: 70px;
+        border: none;
+        padding: 3px;
+    }
+    #button_send_Iphone, #button_send_Nokia{
+        width: 50px;
+        height: 80px;
+        background-color: #f15b5b;
+        color: #fff;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .button{
+        width: 100px;
+        height: 38px;
+        background-color: #f15b5b;
+        color: #fff;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 20px;
+    }
+    button:hover{
+        background-color: #ee8787;
+    }
+    #button_send_Iphone:hover{
+        background-color: #ed8080;
+    }
+    #button_send_Nokia:hover{
+        background-color: #ed8080;
+    }
+
+    .time{
+        width: 160px;      
+    }
+    .charge{
+        width: 100px;        
+    }
+
+
+  
+  
