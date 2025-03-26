@@ -151,12 +151,30 @@ body{
         background-color: #ed8080;
     }
 
-    .time{
+    #status_Iphone{
         width: 160px;      
     }
-    .charge{
+#status_Nokia{
+    width: 160px;
+}
+    #charge_Iphone {
         width: 100px;        
     }
+#charge_Nokia{
+    width: 100px;
+}
+#screen_mess_Nokia{
+    width: 290px;
+}
+#screen_mess_Iphone{
+    width: 290px;
+
+}
+td{
+    width: 145px;
+    vertical-align: top;
+    float: right;
+}
 
 
   

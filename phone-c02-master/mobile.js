@@ -4,7 +4,7 @@ class Mobile {
         this.isOn = false;   // Biến kiểm tra điện thoại bật/tắt
         this.draft = "";     // Tin nhắn đang soạn thảo
         this.inbox = [];     // Danh sách tin nhắn nhận được
-        this.sentMessages = []; // Danh sách tin nhắn đã gửi
+        this.sent = []; // Danh sách tin nhắn đã gửi
     }
     turnOn () {
         if (this.battery > 0) {
@@ -29,18 +29,17 @@ class Mobile {
         this.battery--;
     }
 
-    sendMessage(receiver) {
+    sendMessage(typePhone) {
         if (!this.isOn) {
-            alert("Điện thoại đang tắt!");
+            alert("Please turn on power phone");
             return;
         }
         if (this.draft === "") {
-            alert("Không có tin nhắn để gửi!");
+            alert("Please write message");
             return;
         }
-        this.sentMessages.push(this.draft);  // Lưu tin nhắn vào danh sách đã gửi
-        receiver.receiveMessage(this.draft); // Gửi tin nhắn cho đối tượng Mobile khác
-        alert("Đã gửi tin nhắn: " + this.draft);
+        this.sent.push(this.draft);  // Lưu tin nhắn vào danh sách da gui
+        typePhone.receiveMessage(this.draft); // Gửi tin nhắn cho đối tượng Mobile khác
         this.draft = "";  // Xóa tin nhắn đang soạn sau khi gửi
         this.battery--;   // Giảm pin đi 1 đơn vị
     }
@@ -54,21 +53,22 @@ class Mobile {
         this.battery--;
     }
 
-    viewInbox() {
-        if (!this.isOn) {
-            console.log("Điện thoại đang tắt!");
-            return;
-        }
-        console.log("Hộp thư đến: ", this.inbox);
-        this.battery--;
-    }
-    viewSentMessages() {
-        if (!this.isOn) {
-            console.log("Điện thoại đang tắt!");
-            return;
-        }
-        // console.log("Tin nhắn đã gửi: ", this.sentMessages);
-        this.battery--;
-    }
+
+    // viewInbox() {
+    //     if (!this.isOn) {
+    //         console.log("Điện thoại đang tắt!");
+    //         return;
+    //     }
+    //     console.log("Hộp thư đến: ", this.inbox);
+    //     this.battery--;
+    // }
+    // viewSentMessages() {
+    //     if (!this.isOn) {
+    //         console.log("Điện thoại đang tắt!");
+    //         return;
+    //     }
+    //     this.sentMessages.push(this.sentMessages);
+    //     this.battery--;
+    // }
 
 }

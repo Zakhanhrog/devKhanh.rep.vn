@@ -13,26 +13,34 @@
       <div class="screen">
           
           <div class="header">
-            <span class="time">9:14</span>
-            <span class="charge">Super Charging</span>
-            <span class="battery">100%</span>
+            <p id="status_Nokia">Off</p>
+            <p id="charge_Nokia">Super Charging</p>
+            <p id="battery_Nokia">100%</p>
+
             
           </div>
           <div class="mainScreen">
             <div class="mainScreen_top">
-              <!-- man hinh hien thi tin nhan reg -->
-<!--              <table border="1px">-->
-<!--&lt;!&ndash;                khu vuc hien thi tin nhan  &ndash;&gt;-->
-<!--              </table>-->
+                <table id="screen_mess_Nokia" border="1px solid black">
+                    <thead>
+                    <tr>
+                        <th>inbox</th>
+                        <th>sent</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
             </div>
             <div class="mainScreen_bottom">
-              <input type="text" class="input" placeholder="Enter your message">
-              <button id="button_send_Nokia">Send</button>
+              <input type="text" class="input_Nokia" id="input_Nokia" placeholder="Enter your message">
+              <button id="button_send_Nokia" onclick="send_Nokia()">Send</button>
             </div>
           </div>
           <div class="footer">
             <button class="button" onclick="reset()">Reset</button>
-            <button class="button" onclick="status()">On</button>
+            <button class="button" onclick="statusOn_Nokia()">On</button>
+              <button class="button" onclick="statusOff_Nokia()">Off</button>
             <button class="button" onclick="charge()">Charge</button>
           </div>
 
@@ -43,26 +51,32 @@
       <div class="screen">
           
           <div class="header">
-            <span class="time">9:14</span>
-            <span class="charge">Super Charging</span>
-            <span class="battery">100%</span>
+            <p id="status_Iphone">Off</p>
+            <p id="charge_Iphone">Super Charging</p>
+            <p id="battery_Iphone">100%</p>
             
           </div>
           <div class="mainScreen">
             <div class="mainScreen_top">
-              <!-- man hinh hien thi tin nhan reg --> 
-<!--               <table>-->
-<!--&lt;!&ndash;khu vuc hien thi tin nhan  &ndash;&gt;-->
-<!--               </table>-->
-
+                <table id="screen_mess_Iphone" border="1px solid black">
+                    <thead>
+                    <tr>
+                        <th>inbox</th>
+                        <th>sent</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
             </div>
             <div class="mainScreen_bottom">
-              <input type="text" class="input" placeholder="Enter your message">
-              <button id="button_send_Iphone">Send</button>
+              <input type="text" class="input_Iphone" id="input_Iphone" placeholder="Enter your message">
+              <button id="button_send_Iphone" onclick="send_Iphone()">Send</button>
             </div>
           <div class="footer_iphone">
             <button class="button" onclick="reset()">Reset</button>
-            <button class="button" onclick="status()">On</button>
+            <button class="button" onclick="statusOn_Iphone()">On</button>
+              <button class="button" onclick="statusOff_Iphone()">Off</button>
             <button class="button" onclick="charge()">Charge</button>
           </div>
 
@@ -73,5 +87,5 @@
 </div>
 </body>
 </html>
-<!-- <script src="mobile.js"></script>
-<script src="main.js"></script> -->
+<script src="mobile.js"></script>
+<script src="main.js"></script>
