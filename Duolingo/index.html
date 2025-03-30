@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Duolingo - Học tập</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Thông tin người dùng va chức năng của web -->
+<div class="info_and_function">
+
+ 
+
+  <!-- logo -->
+  <div class="logo">
+    <img src="logo.png" alt="Duolingo"><br>
+    <p style="text-align: right; margin-bottom: 0;"><i>Developed by dev.Zakhanh</i></p>
+  </div>
+  <hr>
+  <!-- Menu chức năng -->
+  <div class="function-user" onclick="showPage(PAGES.WELCOME)">
+    <i class="fas fa-home"></i>
+    <span >DUOLINGO - ENGLISH</span>
+  </div>
+
+  <div class="function-user" onclick="showPage(PAGES.STUDY)">
+    <i class="fas fa-book-open"></i>
+    <span>Học tập</span>
+  </div>
+
+  <div class="function-user" onclick="showPage(PAGES.SUMMARY)">
+    <i class="fas fa-chart-line"></i>
+    <span>Thông tin của bạn</span>
+  </div>
+
+  <div class="function-user" onclick="showPage(PAGES.PROFILE)">
+    <i class="fas fa-user-edit"></i>
+    <span>Chỉnh sửa hồ sơ</span>
+  </div>
+
+  <div class="function-user" onclick="showPage(PAGES.COURSE)">
+    <i class="fas fa-shopping-cart"></i>
+    <span>Mua khoá học</span>
+  </div>
+
+
+  <!-- thông tin ca nhan -->
+  <div class="user-info" id="userInfo">
+    <h3>
+      Xin chào, <span id="userName">Khách</span>!
+      <span id="adminBadge" style="display:none;">ADMIN</span>
+      <button id="logoutBtn" class="logout-button" onclick="setupLogout()">
+        <i class="fas fa-sign-out-alt"></i>
+      </button>
+    </h3>
+    
+    
+    <p><b>Tuổi:</b> <span id="userAge">Chưa cung cấp</span></p>
+    <p><b>Email:</b> <span id="userEmail">Chưa cung cấp</span></p>
+    <p><b>Trình độ:</b> <span id="userLevel">Chưa chọn</span></p>
+    <p><b>Mục tiêu:</b> <span id="userGoal">Chưa đặt</span></p>
+
+    <div class="purchased-courses" id="purchasedCourses">
+      <h4>Khoá học đã mua:</h4>
+      <ul id="purchasedCoursesList">
+        <!-- Các khoá học sẽ ở đây -->
+      </ul>
+    </div>
+  </div>
+  <!-- footer -->
+  <div class="sidebar-footer">
+    <div class="footer-links">
+      <a href="#">Điều khoản</a>
+      <a href="#">Bảo mật</a>
+      <a href="#">Trợ giúp</a>
+    </div>
+    <div class="footer-copyright">
+      <p>© 2025 Duolingo - Ngô Gia Khánh</p>
+      
+    </div>
+  </div>
+</div>
+<!-- phan viet thong tin bai case study -->
+<!-- phan chinh -->
+ 
+<div class="screen-main">
+  
+  <!-- Welcome Page -->
+  <div class="container page" id="welcomePage">
+    <h1>CHÀO MỪNG ĐẾN VỚI</h1>
+    <h2 style="font-size: 90px;">Duolingo</h2>
+    <p style="text-align: center;"><span>Bắt đầu hành trình học tập ngôn ngữ của bạn ngay hôm nay!</span></p>
+    <a href="#" class="button" onclick="startLearning()">Bắt đầu</a>
+  </div>
+
+  <!-- Level Selection Page -->
+  <div id="levelPage" class="container page page-hidden">
+    <h1 style="font-size: 45px;">Trình độ của bạn?</h1>
+    <p style="font-size: 23px;">Hãy chọn trình độ hiện tại của bạn</p>
+    <div class="level-option">
+      <input type="radio" name="level" id="level1" value="beginner">
+      <label for="level1">Tôi mới học Tiếng Anh</label>
+    </div>
+    <div class="level-option">
+      <input type="radio" name="level" id="level2" value="elementary">
+      <label for="level2">Tôi biết một vài từ thông dụng</label>
+    </div>
+    <div class="level-option">
+      <input type="radio" name="level" id="level3" value="intermediate">
+      <label for="level3">Tôi có thể giao tiếp cơ bản</label>
+    </div>
+    <div class="level-option">
+      <input type="radio" name="level" id="level4" value="advanced">
+      <label for="level4">Tôi có thể nói về nhiều chủ đề</label>
+    </div>
+    <div class="level-option">
+      <input type="radio" name="level" id="level5" value="proficient">
+      <label for="level5">Tôi có thể thảo luận sâu về hầu hết các chủ đề</label>
+    </div>
+    <a href="#" class="button" onclick="updateProgress()">Tiếp tục</a>
+  </div>
+
+  <!-- Motivation Selection Page -->
+  <div id="motivationPage" class="container page page-hidden">
+    <h1>Tại sao bạn học Tiếng Anh?</h1>
+    <p>Hãy chọn lý do phù hợp với bạn:</p>
+    <div class="motivation-option">
+      <input type="radio" name="motivation" id="motivation1" value="travel">
+      <label for="motivation1">
+        <i class="fas fa-plane motivation-icon"></i>
+        Chuẩn bị đi du lịch
+      </label>
+    </div>
+    <div class="motivation-option">
+      <input type="radio" name="motivation" id="motivation2" value="productivity">
+      <label for="motivation2">
+        <i class="fas fa-brain motivation-icon"></i>
+        Sử dụng thời gian hiệu quả
+      </label>
+    </div>
+    <div class="motivation-option">
+      <input type="radio" name="motivation" id="motivation3" value="connection">
+      <label for="motivation3">
+        <i class="fas fa-users motivation-icon"></i>
+        Kết nối với mọi người
+      </label>
+    </div>
+    <div class="motivation-option">
+      <input type="radio" name="motivation" id="motivation4" value="fun">
+      <label for="motivation4">
+        <i class="fas fa-gamepad motivation-icon"></i>
+        Giải trí
+      </label>
+    </div>
+    <div class="motivation-option">
+      <input type="radio" name="motivation" id="motivation5" value="study">
+      <label for="motivation5">
+        <i class="fas fa-book-open motivation-icon"></i>
+        Hỗ trợ việc học tập
+      </label>
+    </div>
+    <div class="motivation-option">
+      <input type="radio" name="motivation" id="motivation6" value="career">
+      <label for="motivation6">
+        <i class="fas fa-briefcase motivation-icon"></i>
+        Phát triển sự nghiệp
+      </label>
+    </div>
+    <div class="motivation-option">
+      <input type="radio" name="motivation" id="motivation7" value="other">
+      <label for="motivation7">
+        <i class="fas fa-ellipsis-h motivation-icon"></i>
+        Khác
+      </label>
+    </div>
+    <div id="otherInputContainer" style="display: none;">
+      <input type="text" id="otherMotivation" class="input-field" placeholder="Nhập lý do của bạn">
+    </div>
+    <a href="#" class="button" onclick="proceedToGoal()">Tiếp tục</a>
+  </div>
+
+  <!-- Daily Goal Selection Page -->
+  <div id="goalPage" class="container page page-hidden">
+    <h1>Mục tiêu hàng ngày của bạn là gì?</h1>
+    <p>Hãy chọn thời gian bạn muốn học hàng ngày:</p>
+    <div class="goal-option">
+      <a href="#" class="goal-button" onclick="setDailyGoal(3)">3 phút / ngày</a><br>
+      <a href="#" class="goal-button" onclick="setDailyGoal(10)">10 phút / ngày</a><br>
+      <a href="#" class="goal-button" onclick="setDailyGoal(15)">15 phút / ngày</a> <br>
+      <a href="#" class="goal-button" onclick="setDailyGoal(30)">30 phút / ngày</a><br>
+    </div>
+  </div>
+
+  <!-- Summary Page -->
+  <div id="summaryPage" class="container page page-hidden">
+    <h1 style="font-size: 50px;">Tổng hợp về bạn</h1>
+    <div class="summary-grid">
+      <div class="summary-card">
+        <i class="fas fa-graduation-cap summary-icon"></i>
+        <div class="summary-content">
+          <h3>Trình độ</h3>
+          <p id="summaryLevel">Chưa chọn</p>
+        </div>
+      </div>
+      <div class="summary-card">
+        <i class="fas fa-lightbulb summary-icon"></i>
+        <div class="summary-content">
+          <h3>Lý do học</h3>
+          <p id="summaryMotivation">Chưa chọn</p>
+        </div>
+      </div>
+      <div class="summary-card">
+        <i class="fas fa-clock summary-icon"></i>
+        <div class="summary-content">
+          <h3>Mục tiêu hàng ngày</h3>
+          <p id="summaryGoal">Chưa đặt</p>
+        </div>
+      </div>
+    </div>
+    <div style="display: flex; justify-content: center; gap: 10px;">
+      <a href="#" class="button" onclick="proceedToAchievement()">Tiếp tục</a>
+      <a href="#" class="button secondary" onclick="editSelections()">Chỉnh sửa</a>
+    </div>
+  </div>
+
+  <!-- Achievement Page -->
+  <div id="achievementPage" class="container page page-hidden">
+    <h1>Đây là những thành quả bạn có thể đạt được sau 3 tháng học tập!</h1>
+    <div class="achievement-grid">
+      <div class="achievement-card">
+        <i class="fas fa-comments achievement-icon"></i>
+        <div class="achievement-content">
+          <h3>Tự tin giao tiếp</h3>
+          <p>Các bài học nói và nghe không hề áp lực</p>
+        </div>
+      </div>
+      <div class="achievement-card">
+        <i class="fas fa-book achievement-icon"></i>
+        <div class="achievement-content">
+          <h3>Xây dựng vốn từ</h3>
+          <p>Các từ vựng phổ biến và cụm từ thiết thực</p>
+        </div>
+      </div>
+      <div class="achievement-card">
+        <i class="fas fa-award achievement-icon"></i>
+        <div class="achievement-content">
+          <h3>Tạo thói quen học tập</h3>
+          <p>Nhắc nhở thông minh, thử thách vui nhộn và nhiều tính năng thú vị khác</p>
+        </div>
+      </div>
+    </div>
+    <a href="#" class="button" onclick="proceedToProfile()">TIẾP TỤC</a>
+  </div>
+
+  <!-- Profile Information Page -->
+  <div id="profilePage" class="container page page-hidden">
+    <h1>Thông Tin Cá Nhân</h1>
+    <div class="input-container">
+      
+      <div class="input-group">
+        <label style="text-align: left;">Ảnh đại diện:</label>
+        <input type="file" id="avatarUpload" accept="image/*" class="input-field">
+        <div class="avatar-preview" id="avatarPreview"></div>
+      </div>
+      <div class="input-group">
+        <label style="text-align: left;">Họ và Tên:</label>
+        <input type="text" id="fullName" class="input-field" placeholder="Nhập tên của bạn" required>
+        <div class="error-message" id="nameError">Vui lòng nhập họ và tên</div>
+      </div>
+
+      <div class="input-group">
+        <label style="text-align: left;">Tuổi:</label>
+        <input type="number" id="age" class="input-field" min="5" max="100" placeholder="Nhập tuổi của bạn" required>
+        <div class="error-message" id="ageError">Vui lòng nhập tuổi hợp lệ (5-100)</div>
+      </div>
+
+      <div class="input-group">
+        <label style="text-align: left;">Email:</label>
+        <input type="email" id="email" class="input-field" placeholder="example@gmail.com">
+        <div class="error-message" id="emailError">Vui lòng nhập email hợp lệ</div>
+      </div>
+    </div>
+    <div style="display: flex; justify-content: center; gap: 10px;">
+      <a href="#" class="button" onclick="saveProfileAndContinue()">Lưu thông tin</a>
+      <a href="#" class="button secondary" onclick="showPage(PAGES.WELCOME)">Hủy bỏ</a>
+    </div>
+  </div>
+
+  <!-- Complete Page -->
+  <div id="completePage" class="container page page-hidden">
+    <h1>Hoàn thành!</h1>
+    <p class="success-message">Bạn đã hoàn thành phần hướng dẫn đầu tiên!</p>
+    <p>Hãy tiếp tục học tập và khám phá những điều thú vị cùng Duolingo!</p>
+    <a href="#" class="button" onclick="startLearningNow()">Bắt đầu học ngay!</a>
+  </div>
+  <!-- Page study -->
+  <div id="studyPage" class="container page page-hidden">
+    <div class="study-header">
+      <h1>Bài Học Tiếng Anh</h1>
+      <div class="progress-indicator">
+        <span id="currentQuestionNum">1</span>/<span id="totalQuestions">2</span>
+      </div>
+    </div>
+  
+    <div class="question-container">
+      <div class="question-card">
+        <h3 id="questionText">Câu hỏi đang tải...</h3>
+        <div class="options-container" id="optionsContainer">
+          <!-- Options sẽ được thêm bằng JavaScript -->
+        </div>
+      </div>
+    </div>
+  <!-- Trang cau hỏi  -->
+    <div class="result-feedback" id="resultFeedback" style="display: none;">
+      <div class="feedback-icon">
+        <i class="fas fa-check" id="correctIcon" style="display: none;"></i>
+        <i class="fas fa-times" id="wrongIcon" style="display: none;"></i>
+      </div>
+      <p id="feedbackText"></p>
+    </div>
+  
+    <div class="study-controls">
+      <button class="button check-button" id="checkAnswerBtn" disabled>
+        <i class="fas fa-check-circle"></i> Kiểm tra
+      </button>
+      <button class="button next-button" id="nextQuestionBtn" style="display: none;">
+        <i class="fas fa-arrow-right"></i> Câu tiếp theo
+      </button>
+    </div>
+  
+    <button class="button back-button" onclick="showPage(PAGES.WELCOME)">
+      <i ></i> Quay về trang chủ
+    </button>
+  </div>
+<!-- trang mua các khoá học -->
+  <div id="coursePage" class="container page page-hidden">
+    <h1>Các khoá học hiện có</h1>
+    <p>Lựa chọn khoá học phù hợp với bạn</p>
+    
+    <div class="course-grid">
+      <!-- Course 1 -->
+      <div class="course-card">
+        <div class="course-badge">BEST SELLER</div>
+        <div class="course-header" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+          <h3>Tiếng Anh Giao Tiếp Cơ Bản</h3>
+          <div class="course-price">1.299.000đ <span class="original-price">1.799.000đ</span></div>
+        </div>
+        <div class="course-content">
+          <ul class="course-features">
+            <li><i class="fas fa-check"></i> 30 bài học video</li>
+            <li><i class="fas fa-check"></i> 100+ tình huống giao tiếp</li>
+            <li><i class="fas fa-check"></i> Giáo viên bản ngữ</li>
+            <li><i class="fas fa-check"></i> Hỗ trợ 24/7</li>
+          </ul>
+        </div>
+        <div class="course-footer">
+          <button class="course-button" onclick="buyCourse(1)">Mua ngay</button>
+          <button class="course-button outline" onclick="viewDetails(1)">Chi tiết</button>
+        </div>
+      </div>
+      
+      <!-- Course 2 -->
+      <div class="course-card">
+        <div class="course-badge">NEW</div>
+        <div class="course-header" style="background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);">
+          <h3>Tiếng Anh Cho Người Đi Làm</h3>
+          <div class="course-price">1.599.000đ</div>
+        </div>
+        <div class="course-content">
+          <ul class="course-features">
+            <li><i class="fas fa-check"></i> 45 bài học chuyên sâu</li>
+            <li><i class="fas fa-check"></i> Kỹ năng viết email, thuyết trình</li>
+            <li><i class="fas fa-check"></i> Case study thực tế</li>
+            <li><i class="fas fa-check"></i> Chứng chỉ hoàn thành</li>
+          </ul>
+        </div>
+        <div class="course-footer">
+          <button class="course-button" onclick="buyCourse(2)">Mua ngay</button>
+          <button class="course-button outline" onclick="viewDetails(2)">Chi tiết</button>
+        </div>
+      </div>
+      
+      <!-- Course 3 -->
+      <div class="course-card">
+        <div class="course-header" style="background: linear-gradient(135deg, #5f72bd 0%, #9b59b6 100%);">
+          <h3>Luyện Thi IELTS 6.5+</h3>
+          <div class="course-price">2.499.000đ</div>
+        </div>
+        <div class="course-content">
+          <ul class="course-features">
+            <li><i class="fas fa-check"></i> 60 bài học toàn diện 4 kỹ năng</li>
+            <li><i class="fas fa-check"></i> 10 bài test thực hành</li>
+            <li><i class="fas fa-check"></i> Giáo viên 8.5 IELTS</li>
+            <li><i class="fas fa-check"></i> Cam kết đầu ra</li>
+          </ul>
+        </div>
+        <div class="course-footer">
+          <button class="course-button" onclick="buyCourse(3)">Mua ngay</button>
+          <button class="course-button outline" onclick="viewDetails(3)">Chi tiết</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<audio id="questionAudio" style="display:none;" src="audio.mp3"></audio>
+
+<!-- Modal Chi tiết khoá học -->
+<div id="courseDetailModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeModal('courseDetailModal')">&times;</span>
+    <div id="courseDetailContent"></div>
+  </div>
+</div>
+
+<!-- Modal Thanh toán -->
+<div id="paymentModal" class="modal">
+  <div class="modal-content payment-content">
+    <span class="close-modal" onclick="closeModal('paymentModal')">&times;</span>
+    <h2 id="paymentCourseTitle"></h2>
+    
+    <div class="payment-methods">
+      <h3>Chọn phương thức thanh toán</h3>
+      <div class="payment-option selected" onclick="selectPayment(this, 'momo')">
+        <img src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png" alt="Momo">
+        <span>Ví MoMo</span>
+      </div>
+      <div class="payment-option" onclick="selectPayment(this, 'zalopay')">
+        <img src="https://scontent.fhan3-4.fna.fbcdn.net/v/t39.30808-6/484698273_1047207607559037_2831762024301684186_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeF7yu7-5E7gy8DIf5utzZPS14pX_5i11LXXilf_mLXUtUR_hfxM0zc1aYqNKiPPOXRnx6D5WTrVCG535sxTwqiM&_nc_ohc=xs7VVAYEys4Q7kNvgHVzIYp&_nc_oc=Adk6HJ6CT4Le5-qRQh-DyC_YfWbno3SW_5V4raK2YF6d_SXAJHmu7jUPYUqZjyiXadQ&_nc_zt=23&_nc_ht=scontent.fhan3-4.fna&_nc_gid=ZOI4cGk35tfs2wdKAQcb2w&oh=00_AYGQt2FOCwXMA-pQv5_5TwcOMTX5F0jyNEV3c96EZAM55A&oe=67EED2CE" alt="ZaloPay">
+        <span>ZaloPay</span>
+      </div>
+      <div class="payment-option" onclick="selectPayment(this, 'bank')">
+        <i class="fas fa-university"></i>
+        <span>Chuyển khoản ngân hàng</span>
+      </div>
+      <div class="payment-option" onclick="selectPayment(this, 'card')">
+        <i class="far fa-credit-card"></i>
+        <span>Thẻ Visa/Mastercard</span>
+      </div>
+    </div>
+    
+    <div class="payment-summary">
+      <h3>Thông tin thanh toán</h3>
+      <div class="summary-row">
+        <span>Khoá học:</span>
+        <span id="paymentCourseName"></span>
+      </div>
+      <div class="summary-row">
+        <span>Giá:</span>
+        <span id="paymentCoursePrice" class="price"></span>
+      </div>
+      <div class="summary-row">
+        <span>Phí dịch vụ:</span>
+        <span>0đ</span>
+      </div>
+      <div class="summary-row total">
+        <span>Tổng cộng:</span>
+        <span id="paymentTotal" class="price"></span>
+      </div>
+    </div>
+    
+    <button class="payment-button" onclick="processPayment()">
+      <i class="fas fa-lock"></i> Thanh toán ngay
+    </button>
+    
+    <div class="payment-security">
+      <i class="fas fa-shield-alt"></i>
+      <span>Thanh toán an toàn & bảo mật</span>
+    </div>
+  </div>
+</div>
+
+<!--Thẻ chỉnh sửa khoá học -->
+<div id="editCourseModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeModal('editCourseModal')">&times;</span>
+    <h2>Chỉnh sửa khóa học</h2>
+    
+    <div class="edit-form">
+      <div class="input-group">
+        <label>Tên khóa học:</label>
+        <input type="text" id="editCourseTitle" class="input-field">
+      </div>
+      
+      <div class="input-group">
+        <label>Giá:</label>
+        <input type="number" id="editCoursePrice" class="input-field">
+      </div>
+      
+      <div class="input-group">
+        <label>Giá gốc (nếu có):</label>
+        <input type="number" id="editOriginalPrice" class="input-field" placeholder="Để trống nếu không có giảm giá">
+      </div>
+      
+      <div class="input-group">
+        <label>Thời lượng:</label>
+        <input type="text" id="editCourseDuration" class="input-field">
+      </div>
+      
+      <div class="input-group">
+        <label>Số bài học:</label>
+        <input type="text" id="editCourseLessons" class="input-field">
+      </div>
+      
+      <div class="input-group">
+        <label>Mô tả:</label>
+        <textarea id="editCourseDescription" class="input-field" rows="4"></textarea>
+      </div>
+      
+      <div class="input-group">
+        <label>URL hình ảnh:</label>
+        <input type="text" id="editCourseImage" class="input-field">
+      </div>
+      
+      <div class="input-group">
+        <label>Tính năng (mỗi tính năng 1 dòng):</label>
+        <textarea id="editCourseFeatures" class="input-field" rows="6"></textarea>
+      </div>
+      
+      <div class="form-actions">
+        <button class="button" onclick="saveCourseChanges()">Lưu thay đổi</button>
+        <button class="button danger" onclick="confirmDeleteCourse()" id="deleteCourseBtn">
+          <i class="fas fa-trash"></i> Xoá khoá học
+        </button>
+        <button class="button secondary" onclick="closeModal('editCourseModal')">Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Xác nhận xoá -->
+<div id="confirmDeleteModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeModal('confirmDeleteModal')">&times;</span>
+    <h2>Xác nhận xoá khoá học</h2>
+    <p id="deleteConfirmText">Bạn có chắc chắn muốn xoá khoá học này?</p>
+    <div class="modal-actions">
+      <button class="button danger" onclick="deleteCourse()">
+        <i class="fas fa-trash"></i> Xác nhận xoá
+      </button>
+      <button class="button secondary" onclick="closeModal('confirmDeleteModal')">
+        Huỷ bỏ
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Tạo khoá học mới -->
+<div id="createCourseModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeModal('createCourseModal')">&times;</span>
+    <h2>Tạo khoá học mới</h2>
+    
+    <div class="edit-form">
+      <div class="input-group">
+        <label>Tên khóa học:</label>
+        <input type="text" id="newCourseTitle" class="input-field" placeholder="Nhập tên khóa học">
+      </div>
+      
+      <div class="input-group">
+        <label>Giá:</label>
+        <input type="number" id="newCoursePrice" class="input-field" placeholder="Nhập giá">
+      </div>
+      
+      <div class="input-group">
+        <label>Giá gốc (nếu có):</label>
+        <input type="number" id="newOriginalPrice" class="input-field" placeholder="Để trống nếu không có giảm giá">
+      </div>
+      
+      <div class="input-group">
+        <label>Thời lượng:</label>
+        <input type="text" id="newCourseDuration" class="input-field" placeholder="Ví dụ: 3 tháng">
+      </div>
+      
+      <div class="input-group">
+        <label>Số bài học:</label>
+        <input type="text" id="newCourseLessons" class="input-field" placeholder="Ví dụ: 30 bài học">
+      </div>
+      
+      <div class="input-group">
+        <label>Mô tả:</label>
+        <textarea id="newCourseDescription" class="input-field" rows="4" placeholder="Nhập mô tả khóa học"></textarea>
+      </div>
+      
+      <div class="input-group">
+        <label>URL hình ảnh:</label>
+        <input type="text" id="newCourseImage" class="input-field" placeholder="Dán link hình ảnh">
+      </div>
+      
+      <div class="input-group">
+        <label>Màu gradient (CSS):</label>
+        <input type="text" id="newCourseGradient" class="input-field" placeholder="Ví dụ: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)">
+      </div>
+      
+      <div class="input-group">
+        <label>Tính năng (mỗi tính năng 1 dòng):</label>
+        <textarea id="newCourseFeatures" class="input-field" rows="6" placeholder="Mỗi tính năng trên 1 dòng"></textarea>
+      </div>
+      
+      <div class="form-actions">
+        <button class="button" onclick="createNewCourse()">Tạo khóa học</button>
+        <button class="button secondary" onclick="closeModal('createCourseModal')">Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+
+<script src="script_main.js"></script>
+<script src="add_course.js"></script>
+
+</html>
+
