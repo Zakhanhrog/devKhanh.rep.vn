@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Duolingo - Học tập</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #70e4cf;
+      --secondary-color: #45a049;
+      --background-color: #f8f9fa;
+      --text-color: #2c3e50;
+      --transition-duration: 0.4s;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #4e54c8, #8f94fb);
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-color);
+    }
+
+    .page {
+      max-width: 400px; /* Thu nhỏ khung */
+      width: 100%;
+      padding: 25px; /* Giảm padding */
+      background-color: rgba(255, 255, 255, 0.98);
+      border-radius: 15px; /* Giảm bo tròn */
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Giảm độ bóng */
+      text-align: center;
+      margin: 15px auto; /* Giảm margin */
+      opacity: 0;
+      transform: scale(0.9);
+      transition: opacity var(--transition-duration) ease-in-out, transform var(--transition-duration) ease-in-out, visibility var(--transition-duration) ease-in-out;
+      visibility: hidden;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform-origin: center;
+      margin-left: -200px; /* Căn chỉnh lại */
+    }
+
+    .page.active {
+      opacity: 1;
+      transform: scale(1);
+      visibility: visible;
+      position: relative;
+    }
+
+    h1 {
+      font-family: 'Kanit', serif;
+      font-size: 1.8rem; /* Giảm kích thước tiêu đề */
+      margin: 0 0 15px 0; /* Giảm margin */
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+      color: var(--text-color);
+    }
+
+    p {
+      font-size: 1rem;
+      margin: 0 0 20px 0; /* Giảm margin */
+      line-height: 1.4;
+      text-align: justify;
+      color: #34495e;
+    }
+
+    .button {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 10px 25px; /* Giảm padding */
+      border: none;
+      border-radius: 25px; /* Giảm bo tròn */
+      font-size: 0.9rem; /* Giảm kích thước chữ */
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2); /* Giảm độ bóng */
+      border: 1px solid transparent;
+    }
+
+    .button:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Giảm độ bóng */
+      border-color: var(--primary-color);
+    }
+
+    /* Level và Motivation Options */
+    .level-option, .motivation-option {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px; /* Giảm gap */
+      margin: 10px 0; /* Giảm margin */
+      padding: 10px; /* Giảm padding */
+      background-color: #f8f9fa;
+      border-radius: 8px; /* Giảm bo tròn */
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .level-option:hover, .motivation-option:hover {
+      background-color: #e9ecef;
+      transform: translateY(-1px); /* Giảm hiệu ứng nhô lên */
+    }
+
+    .level-option input[type="radio"], .motivation-option input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    .motivation-icon {
+      color: var(--primary-color);
+      font-size: 1.2rem; /* Giảm kích thước icon */
+      margin-right: 8px; /* Giảm margin */
+    }
+
+    .level-option label, .motivation-option label {
+      font-size: 0.9rem; /* Giảm kích thước chữ */
+      font-weight: 400;
+      color: var(--text-color);
+      display: flex;
+      align-items: center;
+    }
+
+    /* Goal Options */
+    .goal-option {
+      display: flex;
+      flex-direction: column;
+      gap: 10px; /* Giảm gap */
+      margin: 15px 0; /* Giảm margin */
+    }
+
+    .goal-option .goal-button {
+      padding: 10px; /* Giảm padding */
+      border: 1.5px solid var(--primary-color); /* Giảm độ dày border */
+      border-radius: 8px; /* Giảm bo tròn */
+      color: var(--primary-color);
+      background-color: white;
+      font-size: 0.9rem; /* Giảm kích thước chữ */
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: left;
+      padding-left: 15px; /* Giảm padding */
+      text-decoration: none;
+    }
+
+    .goal-option .goal-button:hover {
+      background-color: var(--primary-color);
+      color: white;
+      text-decoration: none;
+    }
+
+    /* Summary Page Styles */
+    .summary-container {
+      max-width: 450px; /* Thu nhỏ khung */
+      width: 100%;
+      padding: 30px; /* Giảm padding */
+      background-color: white;
+      border-radius: 15px; /* Giảm bo tròn */
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Giảm độ bóng */
+      text-align: center;
+      margin: 15px auto; /* Giảm margin */
+    }
+
+    .summary-title {
+      font-family: 'Kanit', serif;
+      font-size: 1.6rem; /* Giảm kích thước tiêu đề */
+      color: var(--primary-color);
+      margin-bottom: 25px; /* Giảm margin */
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Điều chỉnh kích thước cột */
+      gap: 15px; /* Giảm gap */
+    }
+
+    .summary-card {
+      background-color: var(--background-color);
+      padding: 15px; /* Giảm padding */
+      border-radius: 10px; /* Giảm bo tròn */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Giảm độ bóng */
+    }
+
+    .summary-card:hover {
+      transform: translateY(-3px); /* Giảm hiệu ứng nhô lên */
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Giảm độ bóng */
+    }
+
+    .summary-icon-wrapper {
+      width: 50px; /* Giảm kích thước biểu tượng */
+      height: 50px;
+      border-radius: 50%;
+      background-color: rgba(76, 175, 80, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px; /* Giảm margin */
+    }
+
+    .summary-icon {
+      color: var(--primary-color);
+      font-size: 1.5rem; /* Giảm kích thước biểu tượng */
+    }
+
+    .summary-content h3 {
+      color: var(--primary-color);
+      font-size: 1rem; /* Giảm kích thước tiêu đề */
+      margin: 0 0 8px 0; /* Giảm margin */
+      font-weight: 600;
+    }
+
+    .summary-content p {
+      color: #555;
+      font-size: 0.85rem; /* Giảm kích thước chữ */
+      margin: 0;
+      line-height: 1.3;
+    }
+
+    /* Achievement Page Styles (Tương tự, giảm kích thước và padding) */
+    .achievement-container {
+      text-align: center;
+      padding: 30px;
+      background-color: white;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      margin: 20px auto;
+      max-width: 400px;
+    }
+
+    .achievement-title {
+      font-family: 'Kanit', serif;
+      font-size: 1.6rem;
+      margin-bottom: 25px;
+      color: var(--primary-color);
+    }
+
+    .achievement-grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 20px;
+    }
+
+    .achievement-card {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: transform 0.3s ease;
+      text-align: left;
+    }
+
+    .achievement-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .achievement-icon {
+      color: var(--primary-color);
+      font-size: 1.8rem;
+    }
+
+    .achievement-content h3 {
+      color: var(--primary-color);
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+      text-align: left;
+    }
+
+    .achievement-content p {
+      color: #666;
+      margin: 0;
+      font-size: 0.85rem;
+      text-align: left;
+      line-height: 1.3;
+    }
+
+    /* Complete Page Styles (Tương tự, giảm kích thước và padding) */
+    .complete-container {
+      text-align: center;
+      padding: 30px;
+      background-color: white;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      margin: 20px auto;
+      max-width: 400px;
+    }
+
+    .success-message {
+      font-size: 1.2rem;
+      color: var(--primary-color);
+      margin-bottom: 15px;
+    }
+
+  </style>
+</head>
+<body>
+<!-- Welcome Page -->
+<div id="welcomePage" class="page active">
+  <h1>Chào mừng đến với Duolingo</h1>
+  <p>Bắt đầu hành trình học tập ngôn ngữ của bạn ngay hôm nay!</p>
+  <a href="#" class="button" onclick="showPage('levelPage')">Bắt đầu học ngay!</a>
+</div>
+
+<!-- Level Selection Page -->
+<div id="levelPage" class="page">
+  <div class="container">
+    <h1>Trình độ của bạn?</h1>
+    <p>Hãy chọn trình độ hiện tại của bạn:</p>
+    <div class="level-option">
+      <input type="radio" name="level" id="level1" value="beginner">
+      <label for="level1">Tôi mới học Tiếng Anh</label>
+    </div>
+    <div class="level-option">
+      <input type="radio" name="level" id="level2" value="elementary">
+      <label for="level2">Tôi biết một vài từ thông dụng</label>
+    </div>
+    <div class="level-option">
+      <input type="radio" name="level" id="level3" value="intermediate">
+      <label for="level3">Tôi có thể giao tiếp cơ bản</label>
+    </div>
+    <div class="level-option">
+      <input type="radio" name="level" id="level4" value="advanced">
+      <label for="level4">Tôi có thể nói về nhiều chủ đề</label>
+    </div>
+    <div class="level-option">
+      <input type="radio" name="level" id="level5" value="proficient">
+      <label for="level5">Tôi có thể thảo luận sâu về hầu hết các chủ đề</label>
+    </div>
+    <a href="#" class="button" onclick="updateProgress()">Tiếp tục</a>
+  </div>
+</div>
+
+<!-- Motivation Selection Page -->
+<div id="motivationPage" class="page">
+  <div class="container">
+    <h1>Tại sao bạn học Tiếng Anh?</h1>
+    <p>Hãy chọn lý do phù hợp với bạn:</p>
+    <div class="motivation-option">
+      <input type="radio" name="motivation" id="motivation1" value="travel">
+      <label for="motivation1">
+        <i class="fas fa-plane motivation-icon"></i>
+        Chuẩn bị đi du lịch
+      </label>
+    </div>
+    <div class="motivation-option">
+      <input type="radio" name="motivation" id="motivation2" value="productivity">
+      <label for="motivation2">
+        <i class="fas fa-brain motivation-icon"></i>
+        Sử dụng thời gian hiệu quả
+      </label>
+    </div>
+    <div class="motivation-option">
+      <input type="radio" name="motivation" id="motivation3" value="connection">
+      <label for="motivation3">
+        <i class="fas fa-users motivation-icon"></i>
+        Kết nối với mọi người
+      </label>
+    </div>
+    <div class="motivation-option">
+      <input type="radio" name="motivation" id="motivation4" value="fun">
+      <label for="motivation4">
+        <i class="fas fa-gamepad motivation-icon"></i>
+        Giải trí
+      </label>
+    </div>
+    <div class="motivation-option">
+      <input type="radio" name="motivation" id="motivation5" value="study">
+      <label for="motivation5">
+        <i class="fas fa-book-open motivation-icon"></i>
+        Hỗ trợ việc học tập
+      </label>
+    </div>
+    <div class="motivation-option">
+      <input type="radio" name="motivation" id="motivation6" value="career">
+      <label for="motivation6">
+        <i class="fas fa-briefcase motivation-icon"></i>
+        Phát triển sự nghiệp
+      </label>
+    </div>
+    <div class="motivation-option">
+      <input type="radio" name="motivation" id="motivation7" value="other">
+      <label for="motivation7">
+        <i class="fas fa-ellipsis-h motivation-icon"></i>
+        Khác
+      </label>
+    </div>
+    <div id="otherInputContainer" style="display: none;">
+      <input type="text" id="otherMotivation" class="other-input" placeholder="Nhập lý do của bạn">
+    </div>
+    <a href="#" class="button" onclick="proceedToGoal()">Tiếp tục</a>
+  </div>
+</div>
+
+<!-- Daily Goal Selection Page -->
+<div id="goalPage" class="page">
+  <div class="container">
+    <h1>Mục tiêu hàng ngày của bạn là gì?</h1>
+    <p>Hãy chọn thời gian bạn muốn học hàng ngày:</p>
+    <div class="goal-option">
+      <a href="#" class="goal-button" onclick="setDailyGoal(3)">3 phút / ngày</a>
+      <a href="#" class="goal-button" onclick="setDailyGoal(10)">10 phút / ngày</a>
+      <a href="#" class="goal-button" onclick="setDailyGoal(15)">15 phút / ngày</a>
+      <a href="#" class="goal-button" onclick="setDailyGoal(30)">30 phút / ngày</a>
+    </div>
+  </div>
+</div>
+
+<!-- Summary Page -->
+<div id="summaryPage" class="page">
+  <div class="summary-container">
+    <h1 class="summary-title">Tổng hợp sự lựa chọn của bạn</h1>
+    <div class="summary-grid">
+      <div class="summary-card">
+        <div class="summary-icon-wrapper">
+          <i class="fas fa-graduation-cap summary-icon"></i>
+        </div>
+        <div class="summary-content">
+          <h3>Trình độ</h3>
+          <p id="summaryLevel">Chưa chọn</p>
+        </div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-icon-wrapper">
+          <i class="fas fa-lightbulb summary-icon"></i>
+        </div>
+        <div class="summary-content">
+          <h3>Lý do học</h3>
+          <p id="summaryMotivation">Chưa chọn</p>
+        </div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-icon-wrapper">
+          <i class="fas fa-clock summary-icon"></i>
+        </div>
+        <div class="summary-content">
+          <h3>Mục tiêu hàng ngày</h3>
+          <p id="summaryGoal">Chưa chọn</p>
+        </div>
+      </div>
+    </div>
+    <a href="#" class="continue-button" onclick="proceedToAchievement()">Tiếp tục</a>
+  </div>
+</div>
+
+<!-- Achievement Page -->
+<div id="achievementPage" class="page">
+  <div class="achievement-container">
+    <h2 class="achievement-title">Đây là những thành quả bạn có thể đạt được sau 3 tháng học tập!</h2>
+    <div class="achievement-grid">
+      <div class="achievement-card">
+        <i class="fas fa-comments achievement-icon"></i>
+        <div class="achievement-content">
+          <h3>Tự tin giao tiếp</h3>
+          <p>Các bài học nói và nghe không hề áp lực</p>
+        </div>
+      </div>
+      <div class="achievement-card">
+        <i class="fas fa-book achievement-icon"></i>
+        <div class="achievement-content">
+          <h3>Xây dựng vốn từ</h3>
+          <p>Các từ vựng phổ biến và cụm từ thiết thực</p>
+        </div>
+      </div>
+      <div class="achievement-card">
+        <i class="fas fa-award achievement-icon"></i>
+        <div class="achievement-content">
+          <h3>Tạo thói quen học tập</h3>
+          <p>Nhắc nhở thông minh, thử thách vui nhộn và nhiều tính năng thú vị khác</p>
+        </div>
+      </div>
+    </div>
+    <a href="#" class="continue-button" onclick="startLearningNow()">TIẾP TỤC</a>
+  </div>
+</div>
+
+<!-- Complete Page -->
+<div id="completePage" class="page">
+  <div class="complete-container">
+    <h1>Hoàn thành!</h1>
+    <p class="success-message">Bạn đã hoàn thành phần hướng dẫn đầu tiên!</p>
+    <p>Hãy tiếp tục học tập và khám phá những điều thú vị cùng Duolingo!</p>
+    <a href="#" class="button">Bắt đầu học ngay!</a>
+  </div>
+</div>
+<script>
+  function showPage(pageId) {
+    const pages = document.querySelectorAll('.page');
+    pages.forEach(page => {
+      page.classList.remove('active');
+    });
+    document.getElementById(pageId).classList.add('active');
+  }
+
+  function startLearning() {
+    showPage('levelPage');
+  }
+
+  function updateProgress() {
+    const selectedLevel = document.querySelector('input[name="level"]:checked');
+    if (selectedLevel) {
+      localStorage.setItem('level', selectedLevel.value);
+      showPage('motivationPage');
+    } else {
+      alert('Vui lòng chọn trình độ của bạn!');
+    }
+  }
+
+  function proceedToGoal() {
+    const selectedMotivation = document.querySelector('input[name="motivation"]:checked');
+    const otherMotivationInput = document.getElementById('otherMotivation');
+    if (selectedMotivation) {
+      let motivationValue = selectedMotivation.value;
+      if (motivationValue === 'other') {
+        const otherMotivation = otherMotivationInput.value.trim();
+        if (otherMotivation === '') {
+          alert('Vui lòng nhập lý do học của bạn!');
+          return;
+        }
+        motivationValue = otherMotivation;
+      }
+      localStorage.setItem('motivation', motivationValue);
+      showPage('goalPage');
+    } else {
+      alert('Vui lòng chọn lý do học của bạn!');
+    }
+  }
+
+  function setDailyGoal(minutes) {
+    localStorage.setItem('dailyGoal', minutes);
+    displaySummary();
+    showPage('summaryPage');
+  }
+
+  function displaySummary() {
+    const level = localStorage.getItem('level');
+    const motivation = localStorage.getItem('motivation');
+    const goal = localStorage.getItem('dailyGoal');
+    document.getElementById('summaryLevel').textContent = level || "Chưa chọn";
+    document.getElementById('summaryMotivation').textContent = motivation || "Chưa chọn";
+    document.getElementById('summaryGoal').textContent = goal ? goal + " phút" : "Chưa chọn";
+  }
+
+  function proceedToAchievement() {
+    showPage('achievementPage');
+  }
+
+  function startLearningNow() {
+    showPage('completePage');
+  }
+
+  // Khởi tạo trang đầu tiên
+  showPage('welcomePage');
+</script>
+</body>
+</html>
